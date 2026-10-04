@@ -1,6 +1,6 @@
 import { useEffect,useState } from "react";
 import request from "../../utils/request";
-import GameCard from "./GameCard";
+import GameCard from "../game-card/GameCard";
 
 export default function Catalog() {
 const [games,setGames]=useState([])
