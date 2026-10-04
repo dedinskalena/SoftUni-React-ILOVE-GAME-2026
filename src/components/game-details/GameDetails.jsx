@@ -9,11 +9,13 @@ export default function GameDetails() {
     const navigate=useNavigate()
      
     useEffect(()=>{
+        
         request(`/games?id=eq.${gameId}`)
         .then(result=>{
             setGame(result[0])
         })
         .catch(error=>alert(error))
+       
     },[gameId])
 
     const deleteGameHandler=async function (e) {

@@ -6,9 +6,14 @@ export default function Home() {
 const [latestGames,setLatestGames]=useState([])
 
   useEffect(()=>{
-        request('/games?order=created_at.desc&limit=2')
+    const abordController=new AbortController()
+
+        request('/games?order=created_at.desc&limit=2',"GET",null,{signal:abordController.signal})
         .then(result=>setLatestGames(result))
         .catch(err=>alert(err))
+         return ()=>{
+            abordController.abort()
+        }
     },[])
     
 

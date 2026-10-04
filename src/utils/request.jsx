@@ -2,11 +2,12 @@ const URL='https://etlhxwekessjykkdlijw.supabase.co/rest/v1/'
 const APIKEY='sb_publishable_DBoSW9ebShtJBaRJiDjOBg_P6eH4Sqh'
 
 
-export default async function request(path="/",method='GET',data=null){
+export default async function request(path="/",method='GET',data=null,opts={}){
     const options={
         headers:{
             'APIKEY':APIKEY
-        }
+        },
+        ...opts
     }
     if(method!=='GET'){
         options.method=method
