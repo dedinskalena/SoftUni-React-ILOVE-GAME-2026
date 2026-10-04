@@ -1,8 +1,9 @@
 import Footer from "./components/footer/Footer"
 import Header from "./components/header/Header"
 import Home from "./components/home/Home"
+import GameDetails from "./components/game-details/GameDetails"
 
- import Catalog from "./components/catalog/Catalog"
+import Catalog from "./components/catalog/Catalog"
 import { Routes,Route } from "react-router"
  
 
@@ -15,6 +16,7 @@ function App() {
         <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/catalog" element={<Catalog/>}/>
+            <Route path="/games/:id" element={<GameDetails/>}/>
         </Routes>
      
         <Footer/>

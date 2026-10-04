@@ -6,7 +6,7 @@ export default function Catalog() {
 const [games,setGames]=useState([])
 
     useEffect(()=>{
-        request('/games')
+        request('/games?order=created_at.desc')
         .then(games=>setGames(games))
         .catch(err=>alert(err))
     },[])
@@ -17,8 +17,10 @@ const [games,setGames]=useState([])
         <h1>Catalog</h1>
         {/* <!-- Display div: with information about every game (if any) --> */}
         <div className="catalog-container">
-            {games.length===0 && <h3 className="no-articles">No Added Games Yet</h3>}
-           {games.map(game=><GameCard key={game.id} {...game}/>)}
+           
+           {games.length>0?
+           games.map(game=><GameCard key={game.id} {...game}/>)
+            :<h3 className="no-articles">No Added Games Yet</h3>}
              
         </div>
         {/* <!-- Display paragraph: If there is no games  --> */}
