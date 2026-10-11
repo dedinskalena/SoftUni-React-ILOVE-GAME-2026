@@ -18,7 +18,7 @@ export default function GameCreate() {
         }))
     }
     const submitAction=async ()=>{
-       const result= await request('/games',"POST",{
+       await request('/games',"POST",{
             ...values,
             activePlayers:Number(values.activePlayers)
         })
