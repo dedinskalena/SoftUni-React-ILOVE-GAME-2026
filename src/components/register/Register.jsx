@@ -1,7 +1,32 @@
+import { useState } from "react"
+import { useNavigate } from "react-router"
+
 export default function Register() {
+const [user,setUser]=useState(null)
+const navigate=useNavigate()
+
+   const registerAction=(formData)=>{
+      // e.preventDefault()
+      // const formData=new FormData(e.target)
+      const email=formData.get('email')
+      const password=formData.get('password')
+      const confirmPassword=formData.get('confirm-password')
+       
+      if(password!==confirmPassword){
+         alert('Passwords do not match!')
+         return;
+      }
+      if(!email||!password||!confirmPassword){
+         alert("All fields are required!")
+      }
+      setUser({email})
+      //navigate('/')
+   }
    return(
+         <>
+         {user&&<p>Welcome,{user.email}</p>}
          <section id="register-page" className="content auth">
-         <form id="register">
+         <form id="register" action={registerAction}>
             <div className="container">
                 <div className="brand-logo"></div>
                 <h1>Register</h1>
@@ -21,5 +46,6 @@ export default function Register() {
             </div>
         </form>
     </section>
+    </>
    );
 }
