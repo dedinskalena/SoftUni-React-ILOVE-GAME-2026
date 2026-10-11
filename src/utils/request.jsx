@@ -1,5 +1,5 @@
 const URL='https://etlhxwekessjykkdlijw.supabase.co/rest/v1/'
-const APIKEY='sb_publishable_DBoSW9ebShtJBaRJiDjOBg_P6eH4Sqh'
+const APIKEY='sb_publishable_DBoSW9ebShtJBaRJiDjOBg_P6eH4Sqh' 
 
 
 export default async function request(path="/",method='GET',data=null,opts={}){
