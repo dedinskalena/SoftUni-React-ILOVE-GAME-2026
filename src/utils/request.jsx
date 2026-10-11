@@ -13,7 +13,7 @@ export default async function request(path="/",method='GET',data=null,opts={}){
         options.method=method
     }
     if(data){
-        options.headers['Content-Type']='aplication/json'
+        options.headers['Content-Type']='application/json'
         options.body=JSON.stringify(data)
     }
     const response=await fetch(`${URL}${path}`,options)
