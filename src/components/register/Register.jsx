@@ -1,8 +1,11 @@
-import { useState } from "react"
+
 import { useNavigate } from "react-router"
 
-export default function Register() {
-const [user,setUser]=useState(null)
+export default function Register({
+   onRegister,
+   
+}) {
+
 const navigate=useNavigate()
 
    const registerAction=(formData)=>{
@@ -19,12 +22,13 @@ const navigate=useNavigate()
       if(!email||!password||!confirmPassword){
          alert("All fields are required!")
       }
-      setUser({email})
-      //navigate('/')
+      onRegister({email})
+      //setUser({email})
+      navigate('/')
    }
    return(
          <>
-         {user&&<p>Welcome,{user.email}</p>}
+         
          <section id="register-page" className="content auth">
          <form id="register" action={registerAction}>
             <div className="container">
