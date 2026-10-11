@@ -8,17 +8,24 @@ import { Routes,Route } from "react-router"
 import GameCreate from "./components/game-create/GameCreate"
 import Register from "./components/register/Register" 
 import Login from "./components/login/Login" 
-
+import Logout from "./components/logout/Logout"
 
 function App() {
+    
    const [user,setUser]=useState(null)
 
    const userAuthHandler=(userData)=>{
       setUser(userData)
    }
+   const logoutHandler=()=>{
+    setUser(null)
+     
+   }
+    
+
   return (
     <>
-        <Header/>
+        <Header isAuthenticated={!!user}/> 
         {user&&<p>Welcome,{user.email}</p>}
         <Routes>
             <Route path="/" element={<Home/>}/>
@@ -26,7 +33,8 @@ function App() {
             <Route path="/games/:gameId" element={<GameDetails/>}/>
             <Route path="/games/create" element={<GameCreate/>}/>
             <Route path="/register" element={<Register  onRegister={userAuthHandler}/>}/>
-            <Route path="/login" element={<Login/>}/>
+            <Route path="/login" element={<Login onLogin={userAuthHandler}/>}/>
+            <Route path="/logout"  element={<Logout onLogout={logoutHandler}/>}/>
 
         </Routes>
      
