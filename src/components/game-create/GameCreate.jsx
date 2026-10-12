@@ -1,5 +1,6 @@
 import { useState } from "react";
 import request from "../../utils/request"
+import { useNavigate } from "react-router";
 
 export default function GameCreate() {
    const initialValues={
@@ -7,10 +8,11 @@ export default function GameCreate() {
     genre:'',
     activePlayers:'',
     imageUrl:'',
-    summary:''
+    summary:'',
+    releaseDate:''
    }
     const [values,setValues]=useState(initialValues)
-
+    const navigate=useNavigate()
     const changeHandler=(e)=>{
         setValues(state=>({
             ...state,
@@ -18,10 +20,17 @@ export default function GameCreate() {
         }))
     }
     const submitAction=async ()=>{
-       await request('/games',"POST",{
-            ...values,
-            activePlayers:Number(values.activePlayers)
-        })
+        try{
+
+            await request('/games',"POST",{
+                 ...values,
+                 activePlayers:Number(values.activePlayers)
+             })
+             navigate('/catalog')
+        }catch(error){
+            alert(error.message)
+        }
+        
         
     }
 
@@ -50,7 +59,7 @@ export default function GameCreate() {
 
                 <div className="form-group-half">
                     <label htmlFor="releaseDate">Release Date:</label>
-                    <input type="date" id="releaseDate" name="releaseDate"/>
+                    <input type="date" id="releaseDate" name="releaseDate" value={values.releaseDate} onChange={changeHandler}/>
                 </div>
 
                 <div className="form-group-full">
