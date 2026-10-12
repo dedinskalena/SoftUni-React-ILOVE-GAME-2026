@@ -1,4 +1,4 @@
-const URL='https://etlhxwekessjykkdlijw.supabase.co/rest/v1/'
+const URL='https://etlhxwekessjykkdlijw.supabase.co/rest/v1'
 const APIKEY='sb_publishable_DBoSW9ebShtJBaRJiDjOBg_P6eH4Sqh' 
 
 
