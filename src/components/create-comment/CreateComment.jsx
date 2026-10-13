@@ -1,9 +1,11 @@
 import request from "../../utils/request";
-
+ 
 export default function CreateComment({
     user,
-    gameId
+    gameId,
+    onCreate
 }) {
+    
     const addCommentAction=async (formData)=>{
         const newComment={
             text:formData.get('text'),
@@ -13,6 +15,8 @@ export default function CreateComment({
         try{
 
             await request('/comments','POST',newComment)
+            onCreate()
+             
         }catch(error){
             alert(error.message)
         }   
