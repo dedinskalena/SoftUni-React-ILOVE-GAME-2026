@@ -1,5 +1,5 @@
 import { useState } from "react";
-import request from "../../utils/request"
+import request,{fileUpload} from "../../utils/request"
 import { useNavigate } from "react-router";
 
 export default function GameCreate() {
@@ -22,12 +22,24 @@ export default function GameCreate() {
             [e.target.name]:e.target.value
         }))
     }
-    const submitAction=async ()=>{
+    const submitAction=async (formData)=>{
+        
+        const file=formData.get('image')
+        let imageUrl=values.imageUrl
+        if(file){
+            const fileName=`${file.name}`
+            imageUrl= await fileUpload(fileName,file)
+            
+        }
+
+
+
         try{
 
             await request('/games',"POST",{
                  ...values,
-                 activePlayers:Number(values.activePlayers)
+                 activePlayers:Number(values.activePlayers),
+                 imageUrl
              })
              navigate('/catalog')
         }catch(error){

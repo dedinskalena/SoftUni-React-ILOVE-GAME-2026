@@ -1,11 +1,14 @@
 const URL='https://etlhxwekessjykkdlijw.supabase.co/rest/v1'
+const storageUrl='https://etlhxwekessjykkdlijw.supabase.co/storage/v1/object/images'
+
 const APIKEY='sb_publishable_DBoSW9ebShtJBaRJiDjOBg_P6eH4Sqh' 
 
 
 export default async function request(path="/",method='GET',data=null,opts={}){
     const options={
         headers:{
-            'APIKEY':APIKEY
+            'APIKEY':APIKEY,
+            
         },
         ...opts
     }
@@ -26,3 +29,22 @@ export default async function request(path="/",method='GET',data=null,opts={}){
     return response.json()
 
 }
+export  async function fileUpload(fileName,file){
+       const options={
+        headers:{
+            'APIKEY':APIKEY,
+            'Content-Type':'application/octet-stream'
+        },
+    }
+    const response=await fetch(`${storageUrl}/${fileName}`,{
+        method:"POST",
+        body:file,
+        ...options
+    })
+    if(!response.ok){
+        throw new Error(`Http error status:${response.status}`)
+    }
+     return `https://etlhxwekessjykkdlijw.supabase.co/storage/v1/object/public/images/${fileName}`
+
+}
+ 
