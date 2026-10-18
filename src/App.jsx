@@ -10,12 +10,12 @@ import Register from "./components/register/Register"
 import Login from "./components/login/Login" 
 import Logout from "./components/logout/Logout"
 import GameEdit from "./components/game-edit/GameEdit"
- 
+import { useNavigate } from "react-router"
 import { authApi } from "./api"
 
 
 function App() {
-    
+  const navigate=useNavigate()
    const [auth,setAuth]=useState(null)
 
    const register=async (userData)=>{
@@ -23,14 +23,25 @@ function App() {
       //Authenticate with superbase Auth
       try{
 
-        const result=await authApi.register(userData)
+      const result=await authApi.register(userData)
        setAuth(result)
+       navigate('/')
       }catch(error){
         alert(error.message)
       }
        
    }
-   const login=()=>{}
+   const login=async (userData)=>{
+     try{
+
+        const result=await authApi.login(userData)
+        setAuth(result)
+        
+       navigate('/')
+      }catch(error){
+        alert(error.message)
+      }
+   }
    const logoutHandler=()=>{
     setAuth(null)
      
@@ -40,11 +51,11 @@ function App() {
   return (
     <>
         <Header isAuthenticated={!!auth}/> 
-        {auth&&<p>Welcome,{auth.email}</p>}
+        {auth&&<p>Welcome,{auth?.user.email}</p>}
         <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/catalog" element={<Catalog/>}/>
-            <Route path="/games/:gameId" element={<GameDetails user={auth}/>}/>
+            <Route path="/games/:gameId" element={<GameDetails user={auth?.user}/>}/>
             <Route path="/games/create" element={<GameCreate/>}/> 
             <Route path="/games/:gameId/edit" element={<GameEdit/>}/>
 

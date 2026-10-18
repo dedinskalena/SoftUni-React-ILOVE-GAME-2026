@@ -1,12 +1,12 @@
 
-import { useNavigate } from "react-router"
+
 
 export default function Register({
    onRegister,
    
 }) {
 
-const navigate=useNavigate()
+
 
    const registerAction=(formData)=>{
       // e.preventDefault()
@@ -24,7 +24,7 @@ const navigate=useNavigate()
       }
       onRegister({email,password})
       //setUser({email})
-      navigate('/')
+      
    }
    return(
          <>

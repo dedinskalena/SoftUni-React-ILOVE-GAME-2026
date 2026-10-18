@@ -1,17 +1,17 @@
-import { useNavigate } from "react-router";
+ 
 
 export default function Login({
     onLogin
 }) {
-    const navigate=useNavigate()
+     
     const submitAction=(formData)=>{
         const email=formData.get('email')
         const password=formData.get('password')
          if(!email||!password){
          alert("All fields are required!")
       }
-        onLogin({email})
-        navigate('/')
+        onLogin({email,password})
+         
     }
    return(
       
