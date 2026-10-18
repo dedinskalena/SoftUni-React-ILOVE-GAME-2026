@@ -28,6 +28,15 @@ export const remove=async function(gameId,accessToken){
 })
 }
 
+export const update=async function (gameId,data,accessToken) {
+    return request(`/games?id=eq.${gameId}`,"PUT",data,{
+        headers:{
+             ...(getAuthHeader(accessToken))
+
+    }
+})
+}
+
 function getAuthHeader(accessToken){
     return {
         ...(accessToken?{Authorization:`Bearer ${accessToken}`}:{})

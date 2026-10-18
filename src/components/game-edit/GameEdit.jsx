@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import { useNavigate, useParams } from "react-router";
 import request from "../../utils/request"
+import { gameApi } from "../../api";
+import AuthContext from "../../contexts/auth-context";
 
 export default function GameEdit() {
+    const {accessToken}=useContext(AuthContext)
     const navigate=useNavigate()
     const {gameId}=useParams()
     const initialValues={
@@ -32,9 +35,16 @@ export default function GameEdit() {
     },[gameId])
 
     const editAction=async ()=>{
-        await request(`/games?id=eq.${gameId}`,"PATCH",game)
-        navigate(`/games/${gameId}`)
+        try{
+
+            await gameApi.update(gameId,game,accessToken)
+            navigate(`/games/${gameId}`)
+        }catch(error){
+            alert(error.message)
+        }
+        
     }
+
    return(
           <section id="edit-page">
             <form id="add-new-game" action={editAction}>
