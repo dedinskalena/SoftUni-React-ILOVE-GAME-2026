@@ -9,7 +9,7 @@ async function baseRequest(url,path="/",method="GET",data=null,opts={}){
     const options={
         ...opts,
         headers:{
-            ...opts,
+            ...opts.headers,
             'APIKEY':APIKEY,
              
         },

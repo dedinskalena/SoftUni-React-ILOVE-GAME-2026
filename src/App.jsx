@@ -12,11 +12,11 @@ import Logout from "./components/logout/Logout"
 import GameEdit from "./components/game-edit/GameEdit"
 import { useNavigate } from "react-router"
 import { authApi } from "./api"
-
+import AuthContext from "./contexts/auth-context"
 
 function App() {
+  const [auth,setAuth]=useState(null)
   const navigate=useNavigate()
-   const [auth,setAuth]=useState(null)
 
    const register=async (userData)=>{
       //setUser(userData)
@@ -25,6 +25,7 @@ function App() {
 
       const result=await authApi.register(userData)
        setAuth(result)
+       
        navigate('/')
       }catch(error){
         alert(error.message)
@@ -34,22 +35,32 @@ function App() {
    const login=async (userData)=>{
      try{
 
-        const result=await authApi.login(userData)
-        setAuth(result)
+      const result=await authApi.login(userData)
+        setAuth(result); 
         
-       navigate('/')
+        navigate('/')
       }catch(error){
         alert(error.message)
       }
+      
    }
    const logoutHandler=()=>{
-    setAuth(null)
+    
      
+   }
+    
+   const contextValue={
+     accessToken:auth?.access_token,
+     user:auth?.user,
+     isAuthenticated:!!auth,
+     register,
+     login
    }
     
 
   return (
-    <>
+    
+    <AuthContext.Provider value={contextValue}>
         <Header isAuthenticated={!!auth}/> 
         {auth&&<p>Welcome,{auth?.user.email}</p>}
         <Routes>
@@ -68,7 +79,8 @@ function App() {
         <Footer/>
     
 
-    </>
+    
+    </AuthContext.Provider>
   )
 }
 
