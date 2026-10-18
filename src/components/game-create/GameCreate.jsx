@@ -1,8 +1,11 @@
-import { useState } from "react";
-import request,{fileUpload} from "../../utils/request"
+import { useState ,useContext} from "react";
+ 
 import { useNavigate } from "react-router";
+import { gameApi } from "../../api";
+import AuthContext from "../../contexts/auth-context"
 
 export default function GameCreate() {
+   const {accessToken}=useContext(AuthContext)  
    const initialValues={
     title:'',
     genre:'',
@@ -13,8 +16,8 @@ export default function GameCreate() {
    }
     const [values,setValues]=useState(initialValues)
     const navigate=useNavigate()
-    const [isFileUpload,setIsFileUpload]=useState(false)
-    const [previewUrl,setPreviewUrl]=useState(null)
+    
+     
 
     const changeHandler=(e)=>{
         setValues(state=>({
@@ -22,25 +25,12 @@ export default function GameCreate() {
             [e.target.name]:e.target.value
         }))
     }
-    const submitAction=async (formData)=>{
+    const submitAction=async ()=>{
         
-        const file=formData.get('image')
-        let imageUrl=values.imageUrl
-        if(file){
-            const fileName=`${file.name}`
-            imageUrl= await fileUpload(fileName,file)
-            
-        }
-
-
-
+        
         try{
-
-            await request('/games',"POST",{
-                 ...values,
-                 activePlayers:Number(values.activePlayers),
-                 imageUrl
-             })
+          await gameApi.create(values,accessToken)  
+            
              navigate('/catalog')
         }catch(error){
             alert(error.message)
@@ -48,11 +38,7 @@ export default function GameCreate() {
         
        
     }
-     const fileChangeHandler=(e)=>{
-            const file=e.target.files[0]
-            const previewUrl=URL.createObjectURL(file)
-            setPreviewUrl(previewUrl)
-        }
+      
 
    return(
          <section id="add-page">
@@ -80,23 +66,13 @@ export default function GameCreate() {
                     <label htmlFor="releaseDate">Release Date:</label>
                     <input type="date" id="releaseDate" name="releaseDate" value={values.releaseDate} onChange={changeHandler}/>
                 </div>
-                 <div className="form-group-half">
-                    <label htmlFor="toggleFileUoload">Toggle File Upload</label>
-                    <input type="checkbox" id="toggleFileUpload" name="toggleFileUpload" checked={isFileUpload} onChange={()=>setIsFileUpload(!isFileUpload)}/>
-                </div>
-                {isFileUpload?(
-                     <div className="form-group-half">
-                    <label htmlFor="fileUpload">Upload File</label>
-                    <input type="file" id="fileUpload" name="image" onChange={fileChangeHandler}/>
-                    {previewUrl&&<img src={previewUrl} alt="Preview" />}
-                </div>
-                ):
-                (
+                
+                
                 <div className="form-group-half">
                     <label htmlFor="imageUrl">Image URL:</label>
                     <input type="text" id="imageUrl" name="fileUpload"    onChange={changeHandler}/>
                 </div>
-                )}
+                 
                
 
                 <div className="form-group-full">
