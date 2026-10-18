@@ -1,10 +1,11 @@
-const URL='https://etlhxwekessjykkdlijw.supabase.co/rest/v1'
+const restUrl='https://etlhxwekessjykkdlijw.supabase.co/rest/v1'
+const authUrl='https://etlhxwekessjykkdlijw.supabase.co/auth/v1'
+
 const storageUrl='https://etlhxwekessjykkdlijw.supabase.co/storage/v1/object/images'
 
 const APIKEY='sb_publishable_DBoSW9ebShtJBaRJiDjOBg_P6eH4Sqh' 
 
-
-export default async function request(path="/",method='GET',data=null,opts={}){
+async function baseRequest(url,path="/",method="GET",data=null,opts={}){
     const options={
         headers:{
             'APIKEY':APIKEY,
@@ -19,7 +20,7 @@ export default async function request(path="/",method='GET',data=null,opts={}){
         options.headers['Content-Type']='application/json'
         options.body=JSON.stringify(data)
     }
-    const response=await fetch(`${URL}${path}`,options)
+    const response=await fetch(`${url}${path}`,options)
     if(!response.ok){
         throw new Error(`HTTP error! status:${response.status}`)
     }
@@ -27,8 +28,21 @@ export default async function request(path="/",method='GET',data=null,opts={}){
         return null
     }
     return response.json()
+}
+export default async function request(path="/",method='GET',data=null,opts={}){
+    return baseRequest(restUrl,path,method,data,opts)
 
 }
+export const authRequest=async function(path="/",method='GET',data=null,opts={}){
+    return baseRequest(authUrl,path,method,data,opts)
+}
+//export const authRequest=baseRequest.bind(null,authUrl)
+
+
+
+
+
+
 export  async function fileUpload(fileName,file){
        const options={
         headers:{

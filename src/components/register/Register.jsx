@@ -22,7 +22,7 @@ const navigate=useNavigate()
       if(!email||!password||!confirmPassword){
          alert("All fields are required!")
       }
-      onRegister({email})
+      onRegister({email,password})
       //setUser({email})
       navigate('/')
    }

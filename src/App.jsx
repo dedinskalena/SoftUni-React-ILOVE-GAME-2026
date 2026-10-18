@@ -10,33 +10,46 @@ import Register from "./components/register/Register"
 import Login from "./components/login/Login" 
 import Logout from "./components/logout/Logout"
 import GameEdit from "./components/game-edit/GameEdit"
+ 
+import { authApi } from "./api"
+
 
 function App() {
     
-   const [user,setUser]=useState(null)
+   const [auth,setAuth]=useState(null)
 
-   const userAuthHandler=(userData)=>{
-      setUser(userData)
+   const register=async (userData)=>{
+      //setUser(userData)
+      //Authenticate with superbase Auth
+      try{
+
+        const result=await authApi.register(userData)
+       setAuth(result)
+      }catch(error){
+        alert(error.message)
+      }
+       
    }
+   const login=()=>{}
    const logoutHandler=()=>{
-    setUser(null)
+    setAuth(null)
      
    }
     
 
   return (
     <>
-        <Header isAuthenticated={!!user}/> 
-        {user&&<p>Welcome,{user.email}</p>}
+        <Header isAuthenticated={!!auth}/> 
+        {auth&&<p>Welcome,{auth.email}</p>}
         <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/catalog" element={<Catalog/>}/>
-            <Route path="/games/:gameId" element={<GameDetails user={user}/>}/>
+            <Route path="/games/:gameId" element={<GameDetails user={auth}/>}/>
             <Route path="/games/create" element={<GameCreate/>}/> 
             <Route path="/games/:gameId/edit" element={<GameEdit/>}/>
 
-            <Route path="/register" element={<Register  onRegister={userAuthHandler}/>}/>
-            <Route path="/login" element={<Login onLogin={userAuthHandler}/>}/>
+            <Route path="/register" element={<Register  onRegister={register}/>}/>
+            <Route path="/login" element={<Login onLogin={login}/>}/>
             <Route path="/logout"  element={<Logout onLogout={logoutHandler}/>}/>
 
         </Routes>
