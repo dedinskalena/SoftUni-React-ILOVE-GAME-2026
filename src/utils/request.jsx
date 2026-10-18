@@ -7,11 +7,13 @@ const APIKEY='sb_publishable_DBoSW9ebShtJBaRJiDjOBg_P6eH4Sqh'
 
 async function baseRequest(url,path="/",method="GET",data=null,opts={}){
     const options={
+        ...opts,
         headers:{
+            ...opts,
             'APIKEY':APIKEY,
-            
+             
         },
-        ...opts
+        
     }
     if(method!=='GET'){
         options.method=method
