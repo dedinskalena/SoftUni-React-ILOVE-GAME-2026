@@ -7,13 +7,14 @@ import { gameApi } from "../../api";
 import AuthContext from "../../contexts/auth-context";
 
 export default function GameDetails() {
-     const {accessToken,user}=useContext(AuthContext)
+    const {accessToken,user}=useContext(AuthContext)
     const {gameId}=useParams()
     const [game,setGame]=useState({})
     const navigate=useNavigate()
 
     const [refresh,setRefresh]=useState(false)
-     
+    const isOwner=user&&user?.id===game?.user_id 
+
     useEffect(()=>{
         
         request(`/games?id=eq.${gameId}`)
@@ -79,10 +80,13 @@ export default function GameDetails() {
 
         
          {/* <!-- Edit/Delete buttons ( Only for creator of this game )  --> */}
+         {isOwner&&(
+
         <div className="buttons">
             <Link to={`/games/${gameId}/edit`} className="button">Edit</Link>
             <a className="button" onClick={deleteGameHandler}>Delete</a>
         </div>
+         )}
         
          <CommentsList gameId={gameId} refresh={refresh}/>
 
