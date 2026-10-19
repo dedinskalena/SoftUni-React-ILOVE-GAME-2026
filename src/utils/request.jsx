@@ -29,6 +29,7 @@ async function baseRequest(url,path="/",method="GET",data=null,opts={}){
     if([204,201].includes(response.status)){
         return null
     }
+    
     return response.json()
 }
 export default async function request(path="/",method='GET',data=null,opts={}){

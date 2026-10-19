@@ -13,6 +13,7 @@ import GameEdit from "./components/game-edit/GameEdit"
 import { useNavigate } from "react-router"
 import { authApi } from "./api"
 import AuthContext from "./contexts/auth-context"
+ 
 
 function App() {
   const [auth,setAuth]=useState(null)
@@ -44,8 +45,14 @@ function App() {
       }
       
    }
-   const logoutHandler=()=>{
-    
+   const logout=async ()=>{
+    try{
+      await authApi.logout(auth?.access_token)
+      setAuth(null)
+
+    }catch(error){
+      alert(error.message)
+    }
      
    }
     
@@ -54,7 +61,8 @@ function App() {
      user:auth?.user,
      isAuthenticated:!!auth,
      register,
-     login
+     login,
+     logout
    }
     
 
@@ -72,7 +80,7 @@ function App() {
 
             <Route path="/register" element={<Register  onRegister={register}/>}/>
             <Route path="/login" element={<Login onLogin={login}/>}/>
-            <Route path="/logout"  element={<Logout onLogout={logoutHandler}/>}/>
+            <Route path="/logout"  element={<Logout />}/>
 
         </Routes>
      
