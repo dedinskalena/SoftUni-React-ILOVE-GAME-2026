@@ -1,7 +1,8 @@
-import request from "../../utils/request";
+ import { commentApi } from "../../api";
  
 export default function CreateComment({
     user,
+    accessToken,
     gameId,
     onCreate
 }) {
@@ -14,7 +15,7 @@ export default function CreateComment({
         }
         try{
 
-            await request('/comments','POST',newComment)
+             await commentApi.create(newComment,accessToken)
             onCreate()
              
         }catch(error){
