@@ -13,10 +13,11 @@ import GameEdit from "./components/game-edit/GameEdit"
 import { useNavigate } from "react-router"
 import { authApi } from "./api"
 import AuthContext from "./contexts/auth-context"
+import UsePersistedState from "./hooks/usePersistedState"
  
 
 function App() {
-  const [auth,setAuth]=useState(null)
+  const [auth,setAuth]=UsePersistedState('auth',null)
   const navigate=useNavigate()
 
    const register=async (userData)=>{

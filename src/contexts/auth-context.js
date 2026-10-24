@@ -2,7 +2,7 @@ import {createContext} from "react"
 const AuthContext=createContext({
     accessToken:'',
     user:{},
-    isAuthenticated:WebGLTransformFeedback,
+    isAuthenticated: false,
     register(){},
     login(){},
     logout(){}
