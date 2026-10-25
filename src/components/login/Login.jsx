@@ -1,16 +1,17 @@
+ import { useAuth } from "../../hooks/useAuth"
+
  
 
-export default function Login({
-    onLogin
-}) {
-     
+export default function Login() {
+    const {login}=useAuth() 
+
     const submitAction=(formData)=>{
         const email=formData.get('email')
         const password=formData.get('password')
          if(!email||!password){
          alert("All fields are required!")
       }
-        onLogin({email,password})
+        login({email,password})
          
     }
    return(

@@ -1,12 +1,10 @@
+ import { useAuth } from "../../hooks/useAuth"
 
 
 
-export default function Register({
-   onRegister,
-   
-}) {
+export default function Register() {
 
-
+   const {register}=useAuth()
 
    const registerAction=(formData)=>{
       // e.preventDefault()
@@ -22,7 +20,7 @@ export default function Register({
       if(!email||!password||!confirmPassword){
          alert("All fields are required!")
       }
-      onRegister({email,password})
+      register({email,password})
       //setUser({email})
       
    }
