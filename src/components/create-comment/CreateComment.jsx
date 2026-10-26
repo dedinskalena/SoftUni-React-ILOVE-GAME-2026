@@ -2,7 +2,7 @@
  
 export default function CreateComment({
     user,
-    accessToken,
+    
     gameId,
     onCreate
 }) {
@@ -15,7 +15,7 @@ export default function CreateComment({
         }
         try{
 
-             await commentApi.create(newComment,accessToken)
+             await commentApi.create(newComment)
             onCreate()
              
         }catch(error){

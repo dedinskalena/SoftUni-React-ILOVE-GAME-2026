@@ -1,44 +1,22 @@
 import request from "../utils/request"
 
-export const getAll=async (accessToken)=>{
+export const getAll=async ()=>{
     
-    return request('/games?order=created_at.desc',"GET",null,{
-        headers:{
-            ...(accessToken?{Authorization:`Bearer ${accessToken}`}:{})
-        }
-    })
+    return request('/games?order=created_at.desc',"GET")
+        
 }
 
-export const create=async (data,accessToken)=>{
+export const create=async (data)=>{
 
-    return request('/games',"POST",data,{
-        headers:{
-             ...(getAuthHeader(accessToken))
-
-        }
-})
+    return request('/games',"POST",data)
 }
 
-export const remove=async function(gameId,accessToken){
-   return request(`/games?id=eq.${gameId}`,"DELETE",null,{
-        headers:{
-             ...(getAuthHeader(accessToken))
-
-    }
-})
+export const remove=async function(gameId){
+   return request(`/games?id=eq.${gameId}`,"DELETE")
 }
 
-export const update=async function (gameId,data,accessToken) {
-    return request(`/games?id=eq.${gameId}`,"PUT",data,{
-        headers:{
-             ...(getAuthHeader(accessToken))
-
-    }
-})
+export const update=async function (gameId,data) {
+    return request(`/games?id=eq.${gameId}`,"PUT",data)
 }
 
-function getAuthHeader(accessToken){
-    return {
-        ...(accessToken?{Authorization:`Bearer ${accessToken}`}:{})
-    }
-}
+ 

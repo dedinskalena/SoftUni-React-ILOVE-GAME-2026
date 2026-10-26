@@ -1,9 +1,12 @@
-const restUrl='https://etlhxwekessjykkdlijw.supabase.co/rest/v1'
+const restUrl= 'https://etlhxwekessjykkdlijw.supabase.co/rest/v1'
 const authUrl='https://etlhxwekessjykkdlijw.supabase.co/auth/v1'
 
 const storageUrl='https://etlhxwekessjykkdlijw.supabase.co/storage/v1/object/images'
 
 const APIKEY='sb_publishable_DBoSW9ebShtJBaRJiDjOBg_P6eH4Sqh' 
+
+
+
 
 async function baseRequest(url,path="/",method="GET",data=null,opts={}){
     const options={
@@ -11,6 +14,7 @@ async function baseRequest(url,path="/",method="GET",data=null,opts={}){
         headers:{
             ...opts.headers,
             'APIKEY':APIKEY,
+            ...getAuthHeader()
              
         },
         
@@ -41,7 +45,21 @@ export const authRequest=async function(path="/",method='GET',data=null,opts={})
 }
 //export const authRequest=baseRequest.bind(null,authUrl)
 
+function getAuthHeader(){
+    const auth=localStorage.getItem('auth')
+    let accessToken
+    if(auth!="null"){
+        accessToken=JSON.parse(auth).access_token
+    }else{
 
+        accessToken=null
+    }
+
+    //const accessToken=auth ? JSON.parse(auth).access_token:null
+    return {
+        ...(accessToken?{Authorization:`Bearer ${accessToken}`}:{})
+    }
+}
 
 
 

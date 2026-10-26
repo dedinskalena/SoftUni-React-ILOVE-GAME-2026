@@ -47,7 +47,7 @@ export function AuthProvider({
    }
    const logout=async ()=>{
     try{
-      await authApi.logout(auth?.access_token)
+      await authApi.logout()
       setAuth(null)
 
     }catch(error){

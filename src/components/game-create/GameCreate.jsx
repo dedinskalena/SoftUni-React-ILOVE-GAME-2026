@@ -1,11 +1,11 @@
-import { useState ,useContext} from "react";
+import { useState  } from "react";
  
 import { useNavigate } from "react-router";
 import { gameApi } from "../../api";
-import AuthContext from "../../contexts/auth-context"
+ 
 
 export default function GameCreate() {
-   const {accessToken}=useContext(AuthContext)  
+    
    const initialValues={
     title:'',
     genre:'',
@@ -29,7 +29,7 @@ export default function GameCreate() {
         
         
         try{
-          await gameApi.create(values,accessToken)  
+          await gameApi.create(values )  
             
              navigate('/catalog')
         }catch(error){

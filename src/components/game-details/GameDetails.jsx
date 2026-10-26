@@ -7,7 +7,7 @@ import { gameApi } from "../../api";
 import AuthContext from "../../contexts/auth-context";
 
 export default function GameDetails() {
-    const {accessToken,user,isAuthenticated}=useContext(AuthContext)
+    const { user,isAuthenticated}=useContext(AuthContext)
     const {gameId}=useParams()
     const [game,setGame]=useState({})
     const navigate=useNavigate()
@@ -33,7 +33,7 @@ export default function GameDetails() {
         }
        try{
 
-           await  gameApi.remove(gameId,accessToken)
+           await  gameApi.remove(gameId)
            navigate('/catalog')
        }catch(error){
         alert(error)
@@ -92,7 +92,7 @@ export default function GameDetails() {
 
     </div>
  {/* <!-- Add Comment ( Only for logged-in users, which is not creators of the current game ) --> */}
-  {isAuthenticated&&!isOwner&&<CreateComment user={user} gameId={gameId} onCreate={()=>setRefresh(state=>!state)} accessToken={accessToken}/>}
+  {isAuthenticated&&!isOwner&&<CreateComment user={user} gameId={gameId} onCreate={()=>setRefresh(state=>!state)}  />}
    
 </section>
    );
