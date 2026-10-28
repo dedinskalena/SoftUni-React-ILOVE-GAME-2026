@@ -48,7 +48,7 @@ export const authRequest=async function(path="/",method='GET',data=null,opts={})
 function getAuthHeader(){
     const auth=localStorage.getItem('auth')
     let accessToken
-    if(auth!="null"){
+    if(auth&&auth!="null"){
         accessToken=JSON.parse(auth).access_token
     }else{
 
