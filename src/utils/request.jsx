@@ -1,7 +1,7 @@
 const restUrl= 'https://etlhxwekessjykkdlijw.supabase.co/rest/v1'
 const authUrl='https://etlhxwekessjykkdlijw.supabase.co/auth/v1'
 
-const storageUrl='https://etlhxwekessjykkdlijw.supabase.co/storage/v1/object/images'
+const storageUrl='https://etlhxwekessjykkdlijw.supabase.co/storage/v1/object/pictures'
 
 const APIKEY='sb_publishable_DBoSW9ebShtJBaRJiDjOBg_P6eH4Sqh' 
 
@@ -23,8 +23,8 @@ async function baseRequest(url,path="/",method="GET",data=null,opts={}){
         options.method=method
     }
     if(data){
-        options.headers['Content-Type']='application/json'
-        options.body=JSON.stringify(data)
+        options.headers['Content-Type']= options.headers['Content-Type']||'application/json'
+        options.body=data instanceof File ?data:JSON.stringify(data)
     }
     const response=await fetch(`${url}${path}`,options)
     if(!response.ok){
@@ -44,6 +44,15 @@ export const authRequest=async function(path="/",method='GET',data=null,opts={})
     return baseRequest(authUrl,path,method,data,opts)
 }
 //export const authRequest=baseRequest.bind(null,authUrl)
+
+
+export const storageRequest=async function (fileName,file) {
+    return baseRequest(storageUrl,`/${fileName}`,"POST",file,{
+        headers:{
+            'Content-Type':file.type||'application/octet-stream'
+        }
+    })
+}
 
 function getAuthHeader(){
     const auth=localStorage.getItem('auth')
