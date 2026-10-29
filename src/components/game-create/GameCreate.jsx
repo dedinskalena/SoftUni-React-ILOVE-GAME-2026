@@ -2,6 +2,7 @@ import { useState  } from "react";
  
 import { useNavigate } from "react-router";
 import { gameApi } from "../../api";
+import { toast } from "react-toastify";
  
 
 export default function GameCreate() {
@@ -30,10 +31,10 @@ export default function GameCreate() {
         
         try{
           await gameApi.create(values )  
-            
+            toast.success("Game created successfully")
              navigate('/catalog')
         }catch(error){
-            alert(error.message)
+            toast.error(error.message)
         }
         
        
@@ -70,7 +71,7 @@ export default function GameCreate() {
                 
                 <div className="form-group-half">
                     <label htmlFor="imageUrl">Image URL:</label>
-                    <input type="text" id="imageUrl" name="fileUpload"    onChange={changeHandler}/>
+                    <input type="text" id="imageUrl" name="imageUrl"    onChange={changeHandler}/>
                 </div>
                  
                

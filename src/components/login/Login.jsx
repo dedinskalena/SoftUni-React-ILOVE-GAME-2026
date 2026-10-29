@@ -1,4 +1,5 @@
- import { useAuth } from "../../hooks/useAuth"
+ import { toast } from "react-toastify"
+import { useAuth } from "../../hooks/useAuth"
 
  
 
@@ -9,7 +10,7 @@ export default function Login() {
         const email=formData.get('email')
         const password=formData.get('password')
          if(!email||!password){
-         alert("All fields are required!")
+        toast.error('Email and Password are required')
       }
         login({email,password})
          

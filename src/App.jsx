@@ -13,6 +13,7 @@ import GameEdit from "./components/game-edit/GameEdit"
  
  
 import  {AuthProvider} from "./contexts/auth-context"
+import { ToastContainer } from "react-toastify"
  
  
 
@@ -40,7 +41,7 @@ function App() {
             <Route path="/logout"  element={<Logout />}/>
 
         </Routes>
-     
+        <ToastContainer/>
         <Footer/>
     
 

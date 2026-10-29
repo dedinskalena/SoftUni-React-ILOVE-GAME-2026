@@ -53,6 +53,9 @@ export function AuthProvider({
     }catch(error){
       alert(error.message)
     }
+    finally{
+      setAuth(null)
+    }
      
    }
     
